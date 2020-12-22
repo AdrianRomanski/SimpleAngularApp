@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
   @ViewChild('footer', {static: true})
   footerComponent: FooterComponent;
 
-  @ViewChild("page2", {static: true})
+  @ViewChild('page2', {static: true})
   page2Component: Page2Component;
 
   startTime: string;
@@ -29,9 +29,9 @@ export class AppComponent implements OnInit{
     this.startTime = new Date().toString();
   }
 
-  incrementHitCounter(page) {
+  incrementHitCounter(page): void {
     this.currentPage = page;
-    if(page === 2) {
+    if (page === 2) {
       this.page2Component.incrementCounter();
     }
   }
