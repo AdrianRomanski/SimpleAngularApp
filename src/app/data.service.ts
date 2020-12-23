@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {Book} from './model/Book';
+import {Subject} from 'rxjs';
+import {error} from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +9,8 @@ import {Book} from './model/Book';
 export class DataService {
 
   books: Array<Book>;
+  bookAddedEvent = new EventEmitter<Book>();
+  bookDeletedEvent = new EventEmitter<Book>();
 
   constructor() {
     this.books = new Array<Book>();
@@ -27,5 +31,22 @@ export class DataService {
     book3.author = 'filip';
     book3.price = 6.99;
     this.books.push(book3);
+  }
+
+  addBook(book: Book): void {
+    if (book.author === 'james') {
+      this.bookAddedEvent.error('Books by james are not allowed');
+    } else {
+      this.books.push(book);
+      this.bookAddedEvent.emit(book);
+    }
+  }
+
+  deleteBook(): void {
+    if (this.books.length !== 0) {
+      this.bookDeletedEvent.emit(this.books.pop());
+    } else {
+      this.bookDeletedEvent.error('there is no more books');
+    }
   }
 }
