@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataService} from '../data.service';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {DataService, DataServiceInterface} from '../data.service';
 import {Book} from '../model/Book';
 import {Subscription} from 'rxjs';
 
@@ -16,7 +16,7 @@ export class Page1Component implements OnInit, OnDestroy {
   subscriptionBookAdded: Subscription;
   subscriptionBookDeleted: Subscription;
 
-  constructor(private dataService: DataService) { }
+  constructor(@Inject('DataServiceInterface') private dataService: DataServiceInterface) { }
 
   ngOnInit(): void {
     setTimeout(() => { this.pageName = 'First Page'; }, 5000);
